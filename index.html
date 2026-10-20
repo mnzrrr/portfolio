@@ -4,7 +4,7 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>German Virre — 3D & Motion Designer</title>
-<meta name="description" content="3D & Motion Design portfolio">
+<meta name="description" content="3D & Motion Design portfolio of German Virre">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Unbounded:wght@400;600;800&family=Manrope:wght@400;500;700&display=swap" rel="stylesheet">
@@ -29,9 +29,10 @@
 
   /* HERO */
   .hero{position:relative;min-height:100svh;display:flex;align-items:flex-end;padding:120px var(--pad) clamp(48px,8vw,96px);overflow:hidden}
-  .hero-bg{position:absolute;inset:0;z-index:0}
-  .hero-bg video{width:100%;height:100%;object-fit:cover;opacity:.55}
-  .hero-bg::after{content:"";position:absolute;inset:0;background:linear-gradient(180deg,rgba(11,11,13,.2) 0%,rgba(11,11,13,.35) 50%,var(--bg) 100%)}
+  .hero-bg{position:absolute;inset:0;z-index:0;overflow:hidden}
+  .hero-bg video{width:100%;height:100%;object-fit:cover;opacity:.5}
+  .hero-bg iframe{position:absolute;top:50%;left:50%;width:max(100vw,177.78svh);height:max(56.25vw,100svh);transform:translate(-50%,-50%);border:0;pointer-events:none;opacity:.5}
+  .hero-bg::after{content:"";position:absolute;inset:0;background:linear-gradient(180deg,rgba(11,11,13,.25) 0%,rgba(11,11,13,.4) 50%,var(--bg) 100%)}
   .blob{position:absolute;border-radius:50%;filter:blur(70px);opacity:.55;animation:float 14s ease-in-out infinite alternate}
   .b1{width:46vw;height:46vw;background:#5b3cff;top:-10%;left:-8%}
   .b2{width:38vw;height:38vw;background:#00c2ff;top:20%;right:-10%;animation-delay:-4s}
@@ -61,22 +62,40 @@
   .card.hide{display:none}
   .media{position:relative;aspect-ratio:16/10;border-radius:var(--radius);overflow:hidden;background:var(--bg2)}
   .card.wide .media{aspect-ratio:21/9}
-  .media img,.media video{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;transition:transform .7s cubic-bezier(.2,.7,.2,1),opacity .4s}
-  .media video{opacity:0}
-  .card.playing .media video{opacity:1}
-  .card:hover .media img,.card:hover .media video{transform:scale(1.04)}
+  .media img,.media video{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;transition:transform .7s cubic-bezier(.2,.7,.2,1),opacity .5s}
+  .card:hover .media img{transform:scale(1.04)}
+  .media .thumb{opacity:0}
+  .media .thumb.loaded{opacity:1}
+  .media .hover-vid{position:absolute;top:50%;left:50%;width:max(100%,calc(var(--ch,100cqh) * 1.7778));aspect-ratio:16/9;transform:translate(-50%,-50%);border:0;pointer-events:none;opacity:0;transition:opacity .6s}
+  .media .hover-vid.ready{opacity:1}
+  .media{container-type:size}
   .media.ph{background:
       radial-gradient(circle at 25% 30%,hsl(var(--h) 90% 60% / .9),transparent 50%),
       radial-gradient(circle at 75% 70%,hsl(calc(var(--h) + 70) 90% 55% / .8),transparent 50%),
       #141418;background-size:180% 180%;animation:drift 12s ease-in-out infinite alternate}
   @keyframes drift{to{background-position:100% 100%}}
-  .num{position:absolute;left:22px;bottom:14px;font-family:Unbounded;font-weight:800;font-size:clamp(48px,8vw,110px);line-height:1;color:rgba(255,255,255,.9);mix-blend-mode:overlay}
-  .play-mini{position:absolute;top:16px;right:16px;width:46px;height:46px;border-radius:50%;background:rgba(255,255,255,.14);backdrop-filter:blur(10px);opacity:0;transform:scale(.8);transition:all .3s}
+  .play-mini{position:absolute;top:16px;right:16px;z-index:3;width:46px;height:46px;border-radius:50%;background:rgba(255,255,255,.14);backdrop-filter:blur(10px);opacity:0;transform:scale(.8);transition:all .3s}
   .play-mini::after{content:"";position:absolute;left:18px;top:15px;border-left:12px solid #fff;border-top:8px solid transparent;border-bottom:8px solid transparent}
   .card:hover .play-mini{opacity:1;transform:scale(1)}
   .meta{display:flex;justify-content:space-between;align-items:baseline;gap:16px;padding:16px 4px 0}
   .meta h3{font-size:clamp(16px,1.6vw,20px);font-weight:600}
   .meta span{font-size:14px;color:var(--muted);white-space:nowrap}
+
+  /* GALLERY (card + modal) */
+  .gallery .slide{opacity:0;transition:opacity .5s,transform .7s cubic-bezier(.2,.7,.2,1)}
+  .gallery .slide.on{opacity:1}
+  .arr{position:absolute;top:50%;z-index:3;width:46px;height:46px;margin-top:-23px;border-radius:50%;background:rgba(10,10,12,.45);backdrop-filter:blur(10px);display:grid;place-items:center;transition:background .2s,opacity .3s,transform .2s}
+  .arr:hover{background:rgba(10,10,12,.75);transform:scale(1.08)}
+  .arr svg{width:20px;height:20px;stroke:#fff;stroke-width:2.2;fill:none}
+  .arr.prev{left:14px}.arr.next{right:14px}
+  .dots{position:absolute;left:50%;bottom:14px;z-index:3;transform:translateX(-50%);display:flex;gap:6px}
+  .dots i{width:7px;height:7px;border-radius:50%;background:rgba(255,255,255,.4);transition:all .3s}
+  .dots i.on{background:#fff;width:20px;border-radius:4px}
+  .count{position:absolute;top:16px;left:16px;z-index:3;font-size:12px;letter-spacing:.08em;padding:4px 10px;border-radius:999px;background:rgba(10,10,12,.45);backdrop-filter:blur(10px)}
+  @media (hover:hover){
+    .card .arr{opacity:0}
+    .card:hover .arr{opacity:1}
+  }
 
   /* ABOUT */
   .about{border-top:1px solid var(--line)}
@@ -90,7 +109,7 @@
 
   /* CONTACT */
   .contact{border-top:1px solid var(--line);text-align:left}
-  .mail{display:inline-block;font-family:Unbounded;font-weight:800;font-size:clamp(28px,7vw,104px);line-height:1.05;letter-spacing:-.03em;word-break:break-all;background:linear-gradient(90deg,var(--fg) 50%,var(--accent) 50%) right/200% 100%;-webkit-background-clip:text;background-clip:text;color:transparent;transition:background-position .6s}
+  .mail{display:inline-block;font-family:Unbounded;font-weight:800;font-size:clamp(24px,6vw,92px);line-height:1.05;letter-spacing:-.03em;word-break:break-all;background:linear-gradient(90deg,var(--fg) 50%,var(--accent) 50%) right/200% 100%;-webkit-background-clip:text;background-clip:text;color:transparent;transition:background-position .6s}
   .mail:hover{background-position:left}
   .socials{display:flex;flex-wrap:wrap;gap:12px 28px;margin-top:40px}
   .socials a{color:var(--muted);border-bottom:1px solid transparent;transition:all .2s}
@@ -98,19 +117,20 @@
   footer{padding:28px var(--pad);border-top:1px solid var(--line);font-size:13px;color:var(--muted);display:flex;justify-content:space-between;flex-wrap:wrap;gap:10px}
 
   /* MODAL */
-  .modal{position:fixed;inset:0;z-index:50;display:flex;align-items:center;justify-content:center;padding:var(--pad);background:rgba(5,5,7,.85);backdrop-filter:blur(14px);opacity:0;pointer-events:none;transition:opacity .3s}
+  .modal{position:fixed;inset:0;z-index:50;display:flex;align-items:center;justify-content:center;padding:var(--pad);background:rgba(5,5,7,.9);backdrop-filter:blur(14px);opacity:0;pointer-events:none;transition:opacity .3s}
   .modal.open{opacity:1;pointer-events:auto}
-  .modal-box{width:min(1200px,100%);transform:translateY(20px);transition:transform .35s}
+  .modal-box{width:min(1200px,100%);max-height:100%;overflow:auto;transform:translateY(20px);transition:transform .35s}
   .modal.open .modal-box{transform:none}
-  .player{position:relative;aspect-ratio:16/9;border-radius:var(--radius);overflow:hidden;background:#000}
-  .player iframe,.player video{position:absolute;inset:0;width:100%;height:100%;border:0}
+  .player{position:relative;aspect-ratio:16/9;max-height:80vh;margin:0 auto;border-radius:var(--radius);overflow:hidden;background:#000}
+  .player.square{aspect-ratio:1/1;width:min(100%,80vh)}
+  .player iframe,.player video,.player img{position:absolute;inset:0;width:100%;height:100%;border:0;object-fit:contain}
   .player .empty{position:absolute;inset:0;display:grid;place-items:center;color:var(--muted);text-align:center;padding:20px}
   .modal-info{display:flex;justify-content:space-between;gap:24px;flex-wrap:wrap;padding-top:20px}
   .modal-info h3{font-size:clamp(20px,2.4vw,30px)}
   .modal-info p{color:#bdbdc3;max-width:620px;margin-top:8px}
-  .modal-info dl{display:grid;grid-template-columns:auto auto;gap:4px 18px;font-size:14px;align-content:start}
+  .modal-info dl{display:grid;grid-template-columns:auto auto;gap:4px 18px;font-size:14px;align-content:start;max-width:360px}
   .modal-info dt{color:var(--muted)}
-  .close{position:fixed;top:16px;right:16px;width:48px;height:48px;border-radius:50%;background:rgba(255,255,255,.1);font-size:26px;line-height:1}
+  .close{position:fixed;top:16px;right:16px;z-index:5;width:48px;height:48px;border-radius:50%;background:rgba(255,255,255,.1);font-size:26px;line-height:1}
   .close:hover{background:rgba(255,255,255,.2)}
 
   /* REVEAL */
@@ -124,6 +144,7 @@
     .about-cols{grid-template-columns:1fr}
     .scroll-cue{display:none}
     .nav nav{gap:14px}
+    .arr{width:40px;height:40px;margin-top:-20px}
   }
   @media (prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}}
 </style>
@@ -141,7 +162,7 @@
     <p class="eyebrow" id="heroEyebrow"></p>
     <h1 id="heroName"></h1>
     <p class="hero-role" id="heroRole"></p>
-    <button class="play-btn" id="reelBtn"><span class="play-ico"></span>Watch showreel</button>
+    <button class="play-btn" id="reelBtn"><span class="play-ico"></span><span id="reelLabel"></span></button>
   </div>
   <div class="scroll-cue">Scroll</div>
 </section>
@@ -182,13 +203,11 @@
 /* =====================================================================
    ✏️  РЕДАКТИРУЙ ТОЛЬКО ЭТОТ БЛОК — всё остальное соберётся само
    ---------------------------------------------------------------------
-   Видео (поле video / showreel):
-     { type: "youtube", src: "https://youtu.be/XXXXXXXXXXX" }
-     { type: "vimeo",   src: "https://vimeo.com/123456789" }
-     { type: "mp4",     src: "videos/project1.mp4" }      // файл в репозитории
-   preview — короткий беззвучный луп (3–6 сек, .mp4), играет при наведении
-   thumb   — картинка-обложка (jpg/webp). Если нет ни thumb, ни preview,
-             будет цветная анимированная заглушка (hue = цвет 0–360).
+   video:  { type: "vimeo",   src: "https://vimeo.com/123456789" }
+           { type: "youtube", src: "https://youtu.be/XXXXXXXXXXX" }
+           { type: "mp4",     src: "assets/video/file.mp4" }
+   images: ["assets/img/a.jpg", "assets/img/b.jpg"]  — галерея со стрелками
+   thumb:  обложка карточки (для Vimeo подтягивается сама, если пусто)
    wide: true — карточка на всю ширину
    ===================================================================== */
 const CONFIG = {
@@ -196,8 +215,9 @@ const CONFIG = {
   role: "3D & Motion Designer crafting product visuals, kinetic type and brand animation.",
   location: "Estonia",
   email: "mnzrmotion@gmail.com",
-  showreel: { type: "youtube", src: "" },     // ссылка на шоурил
-  heroLoop: "",                               // напр. "videos/hero-loop.mp4" — фон первого экрана
+  showreel: { type: "vimeo", src: "https://vimeo.com/1174177238" },   // кнопка на первом экране
+  reelLabel: "Watch latest work",                                     // текст кнопки
+  heroLoop: { type: "vimeo", src: "https://vimeo.com/1174177238" },   // фон первого экрана (vimeo или mp4)
   about: "I'm a 3D and motion designer based in Estonia. I build product animations, kinetic typography and visuals for brands — from concept and modelling to lighting, animation and final compositing.",
   services: ["3D product visualization", "Motion design & animation", "Kinetic typography", "Compositing & post-production"],
   tools: ["Cinema 4D", "After Effects", "Illustrator", "Photoshop", "Redshift", "Premiere Pro"],
@@ -209,44 +229,59 @@ const CONFIG = {
 };
 
 const PROJECTS = [
-  { title: "Wireless Earbuds Launch", category: "3D Product", year: "2026", client: "Brand name",
-    description: "Product launch film: modelling, look-dev, lighting and animation.",
-    thumb: "", preview: "", video: { type: "youtube", src: "" }, hue: 255, wide: true },
-  { title: "Kinetic Type Series", category: "Motion Design", year: "2026", client: "Personal",
-    description: "A set of typographic animations exploring rhythm and motion.",
-    thumb: "", preview: "", video: { type: "vimeo", src: "" }, hue: 200 },
-  { title: "Perfume Bottle Spot", category: "3D Product", year: "2025", client: "Brand name",
-    description: "Liquid simulation and glass rendering for a 15s social spot.",
-    thumb: "", preview: "", video: { type: "mp4", src: "" }, hue: 320 },
-  { title: "Logo Reveal Pack", category: "Motion Design", year: "2025", client: "Studio",
-    description: "Five logo animations for social media and presentations.",
-    thumb: "", preview: "", video: { type: "youtube", src: "" }, hue: 30 },
-  { title: "Abstract Loops", category: "Experiments", year: "2025", client: "Personal",
-    description: "Seamless abstract loops made in Cinema 4D.",
-    thumb: "", preview: "", video: { type: "youtube", src: "" }, hue: 160 },
-  { title: "Sneaker Explode View", category: "3D Product", year: "2024", client: "Brand name",
-    description: "Exploded-view animation showing product construction.",
-    thumb: "", preview: "", video: { type: "youtube", src: "" }, hue: 90 }
+  { title: "Alabaster Watch Concept", category: "3D Product",
+    description: "",
+    video: { type: "vimeo", src: "https://vimeo.com/1174177238" }, wide: true },
+  { title: "Motion for Revuelt Core", category: "Motion Design",
+    description: "",
+    video: { type: "vimeo", src: "https://vimeo.com/1237762770" } },
+  { title: "Perfume Product Render", category: "Product Stills",
+    description: "",
+    images: ["assets/img/perfume-1.jpg", "assets/img/perfume-2.jpg"], square: true }
 ];
 /* ======================= конец блока настроек ======================== */
 
 const $ = s => document.querySelector(s);
 const esc = s => String(s ?? "").replace(/[&<>"']/g, c => ({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]));
+const ARR = d => `<svg viewBox="0 0 24 24"><path d="${d === "prev" ? "M15 5l-7 7 7 7" : "M9 5l7 7-7 7"}"/></svg>`;
+const vimeoId = src => (String(src).match(/vimeo\.com\/(?:video\/)?(\d+)/) || [])[1];
+const ytId = src => (String(src).match(/(?:v=|youtu\.be\/|embed\/|shorts\/)([\w-]{11})/) || [])[1];
 
 function embed(v){
   if (!v || !v.src) return `<div class="empty">Add a video link for this project in PROJECTS</div>`;
   const src = v.src.trim();
-  if (v.type === "youtube"){
-    const m = src.match(/(?:v=|youtu\.be\/|embed\/|shorts\/)([\w-]{11})/);
-    const id = m ? m[1] : src;
-    return `<iframe src="https://www.youtube.com/embed/${esc(id)}?autoplay=1&rel=0&modestbranding=1" allow="autoplay; fullscreen; picture-in-picture" allowfullscreen></iframe>`;
-  }
-  if (v.type === "vimeo"){
-    const m = src.match(/vimeo\.com\/(?:video\/)?(\d+)/);
-    const id = m ? m[1] : src;
-    return `<iframe src="https://player.vimeo.com/video/${esc(id)}?autoplay=1" allow="autoplay; fullscreen; picture-in-picture" allowfullscreen></iframe>`;
-  }
+  if (v.type === "youtube") return `<iframe src="https://www.youtube.com/embed/${esc(ytId(src) || src)}?autoplay=1&rel=0&modestbranding=1" allow="autoplay; fullscreen; picture-in-picture" allowfullscreen></iframe>`;
+  if (v.type === "vimeo") return `<iframe src="https://player.vimeo.com/video/${esc(vimeoId(src) || src)}?autoplay=1&title=0&byline=0&portrait=0" allow="autoplay; fullscreen; picture-in-picture" allowfullscreen></iframe>`;
   return `<video src="${esc(src)}" controls autoplay playsinline></video>`;
+}
+const vimeoBg = id => `https://player.vimeo.com/video/${id}?background=1&muted=1&autoplay=1&loop=1&dnt=1`;
+
+/* --- gallery helper: slides + arrows + dots + swipe --- */
+function gallery(root, images, start = 0, alt = ""){
+  root.classList.add("gallery");
+  root.insertAdjacentHTML("beforeend",
+    images.map((src, i) => `<img class="slide${i === start ? " on" : ""}" src="${esc(src)}" alt="${esc(alt)} ${i + 1}" ${i ? 'loading="lazy"' : ""}>`).join("") +
+    (images.length > 1 ? `<button class="arr prev" aria-label="Previous">${ARR("prev")}</button><button class="arr next" aria-label="Next">${ARR("next")}</button>
+     <span class="count"></span><div class="dots">${images.map(() => "<i></i>").join("")}</div>` : ""));
+  let idx = start;
+  const slides = root.querySelectorAll(".slide"), dots = root.querySelectorAll(".dots i"), count = root.querySelector(".count");
+  const go = n => {
+    idx = (n + images.length) % images.length;
+    slides.forEach((s, i) => s.classList.toggle("on", i === idx));
+    dots.forEach((d, i) => d.classList.toggle("on", i === idx));
+    if (count) count.textContent = `${idx + 1} / ${images.length}`;
+  };
+  go(start);
+  root.querySelector(".prev")?.addEventListener("click", e => { e.stopPropagation(); go(idx - 1); });
+  root.querySelector(".next")?.addEventListener("click", e => { e.stopPropagation(); go(idx + 1); });
+  let x0 = null;
+  root.addEventListener("touchstart", e => { x0 = e.touches[0].clientX; }, { passive: true });
+  root.addEventListener("touchend", e => {
+    if (x0 === null) return;
+    const dx = e.changedTouches[0].clientX - x0; x0 = null;
+    if (Math.abs(dx) > 40){ root.dataset.swiped = "1"; go(idx + (dx < 0 ? 1 : -1)); setTimeout(() => delete root.dataset.swiped, 50); }
+  });
+  return { go, get index(){ return idx; } };
 }
 
 /* --- fill static text --- */
@@ -255,6 +290,7 @@ $("#logo").textContent = CONFIG.name;
 $("#heroEyebrow").textContent = `Portfolio · ${CONFIG.location}`;
 $("#heroName").textContent = CONFIG.name;
 $("#heroRole").textContent = CONFIG.role;
+$("#reelLabel").textContent = CONFIG.reelLabel || "Watch showreel";
 $("#aboutText").textContent = CONFIG.about;
 $("#services").innerHTML = CONFIG.services.map(s => `<li>${esc(s)}</li>`).join("");
 $("#tools").innerHTML = CONFIG.tools.map(s => `<li>${esc(s)}</li>`).join("");
@@ -262,66 +298,117 @@ $("#mail").textContent = CONFIG.email;
 $("#mail").href = `mailto:${CONFIG.email}`;
 $("#socials").innerHTML = CONFIG.socials.map(s => `<a href="${esc(s.url)}" target="_blank" rel="noopener">${esc(s.label)} ↗</a>`).join("");
 $("#copy").textContent = `© ${new Date().getFullYear()} ${CONFIG.name}`;
-if (CONFIG.heroLoop){
-  $("#heroBg").insertAdjacentHTML("afterbegin", `<video src="${esc(CONFIG.heroLoop)}" autoplay muted loop playsinline></video>`);
-  document.querySelectorAll(".blob").forEach(b => b.remove());
+
+const hl = CONFIG.heroLoop;
+if (hl && hl.src){
+  const id = hl.type === "vimeo" && vimeoId(hl.src);
+  $("#heroBg").insertAdjacentHTML("afterbegin", id
+    ? `<iframe src="${vimeoBg(id)}" allow="autoplay" tabindex="-1" title="Background video"></iframe>`
+    : `<video src="${esc(hl.src)}" autoplay muted loop playsinline></video>`);
 }
 
 /* --- grid --- */
-$("#grid").innerHTML = PROJECTS.map((p, i) => {
-  const ph = !p.thumb && !p.preview;
-  return `<article class="card reveal${p.wide ? " wide" : ""}" data-i="${i}" data-cat="${esc(p.category)}" style="--h:${p.hue ?? (i * 57) % 360}">
-    <div class="media${ph ? " ph" : ""}">
-      ${p.thumb ? `<img src="${esc(p.thumb)}" alt="${esc(p.title)}" loading="lazy">` : ""}
-      ${p.preview ? `<video src="${esc(p.preview)}" muted loop playsinline preload="none"></video>` : ""}
-      ${ph ? `<span class="num">${String(i + 1).padStart(2, "0")}</span>` : ""}
-      <span class="play-mini"></span>
-    </div>
-    <div class="meta"><h3>${esc(p.title)}</h3><span>${esc(p.category)} · ${esc(p.year)}</span></div>
-  </article>`;
-}).join("");
+const grid = $("#grid");
+const galleries = [];
+PROJECTS.forEach((p, i) => {
+  const card = document.createElement("article");
+  card.className = `card reveal${p.wide ? " wide" : ""}`;
+  card.dataset.cat = p.category;
+  card.style.setProperty("--h", p.hue ?? (i * 97 + 220) % 360);
+  const meta = [p.category, p.year].filter(Boolean).map(esc).join(" · ");
+  card.innerHTML = `<div class="media"></div><div class="meta"><h3>${esc(p.title)}</h3><span>${meta}</span></div>`;
+  const media = card.querySelector(".media");
 
-/* --- filters --- */
+  if (p.images && p.images.length){
+    galleries[i] = gallery(media, p.images, 0, p.title);
+  } else {
+    media.classList.add("ph");
+    media.insertAdjacentHTML("beforeend", `<span class="play-mini"></span>`);
+    const vid = p.video && p.video.type === "vimeo" && vimeoId(p.video.src);
+    const setThumb = url => {
+      const img = new Image();
+      img.className = "thumb"; img.alt = p.title; img.loading = "lazy";
+      img.onload = () => { img.classList.add("loaded"); media.classList.remove("ph"); };
+      img.src = url;
+      media.prepend(img);
+    };
+    if (p.thumb) setThumb(p.thumb);
+    else if (vid){
+      fetch(`https://vimeo.com/api/oembed.json?url=${encodeURIComponent("https://vimeo.com/" + vid)}&width=1920`)
+        .then(r => r.ok ? r.json() : null)
+        .then(d => { if (d && d.thumbnail_url) setThumb(d.thumbnail_url.replace(/_\d+x\d+/, "_1920")); })
+        .catch(() => {});
+    } else if (p.video && p.video.type === "youtube" && ytId(p.video.src)){
+      setThumb(`https://i.ytimg.com/vi/${ytId(p.video.src)}/maxresdefault.jpg`);
+    }
+    // hover preview (desktop only)
+    if (vid && matchMedia("(hover:hover)").matches){
+      let t;
+      card.addEventListener("mouseenter", () => {
+        t = setTimeout(() => {
+          if (media.querySelector(".hover-vid")) return;
+          const f = document.createElement("iframe");
+          f.className = "hover-vid"; f.allow = "autoplay"; f.tabIndex = -1; f.title = "";
+          f.src = vimeoBg(vid);
+          f.onload = () => setTimeout(() => f.classList.add("ready"), 600);
+          media.appendChild(f);
+        }, 250);
+      });
+      card.addEventListener("mouseleave", () => { clearTimeout(t); media.querySelector(".hover-vid")?.remove(); });
+    }
+  }
+  card.addEventListener("click", () => {
+    if (media.dataset.swiped) return;
+    openModal(p, galleries[i] ? galleries[i].index : 0);
+  });
+  grid.appendChild(card);
+});
+
+/* --- filters (hidden if only one category) --- */
 const cats = ["All", ...new Set(PROJECTS.map(p => p.category))];
-$("#filters").innerHTML = cats.map((c, i) => `<button class="chip${i ? "" : " on"}" data-c="${esc(c)}">${esc(c)}</button>`).join("");
-$("#filters").addEventListener("click", e => {
-  const b = e.target.closest(".chip"); if (!b) return;
-  document.querySelectorAll(".chip").forEach(x => x.classList.toggle("on", x === b));
-  document.querySelectorAll(".card").forEach(c => c.classList.toggle("hide", b.dataset.c !== "All" && c.dataset.cat !== b.dataset.c));
-});
-
-/* --- hover previews (desktop) / in-view previews (touch) --- */
-const canHover = matchMedia("(hover:hover)").matches;
-const play = c => { const v = c.querySelector("video"); if (v){ v.play().catch(()=>{}); c.classList.add("playing"); } };
-const stop = c => { const v = c.querySelector("video"); if (v){ v.pause(); c.classList.remove("playing"); } };
-document.querySelectorAll(".card").forEach(c => {
-  if (canHover){ c.addEventListener("mouseenter", () => play(c)); c.addEventListener("mouseleave", () => stop(c)); }
-  c.addEventListener("click", () => openModal(PROJECTS[c.dataset.i]));
-});
-if (!canHover){
-  const io = new IntersectionObserver(es => es.forEach(e => e.isIntersecting ? play(e.target) : stop(e.target)), { threshold: .6 });
-  document.querySelectorAll(".card").forEach(c => io.observe(c));
+if (cats.length > 2){
+  $("#filters").innerHTML = cats.map((c, i) => `<button class="chip${i ? "" : " on"}" data-c="${esc(c)}">${esc(c)}</button>`).join("");
+  $("#filters").addEventListener("click", e => {
+    const b = e.target.closest(".chip"); if (!b) return;
+    document.querySelectorAll(".chip").forEach(x => x.classList.toggle("on", x === b));
+    document.querySelectorAll(".card").forEach(c => c.classList.toggle("hide", b.dataset.c !== "All" && c.dataset.cat !== b.dataset.c));
+  });
 }
 
 /* --- modal --- */
-const modal = $("#modal");
-function openModal(p){
-  $("#player").innerHTML = embed(p.video);
-  $("#modalInfo").innerHTML = p.title === "__reel" ? "" :
-    `<div><h3>${esc(p.title)}</h3><p>${esc(p.description)}</p></div>
-     <dl><dt>Client</dt><dd>${esc(p.client)}</dd><dt>Year</dt><dd>${esc(p.year)}</dd><dt>Type</dt><dd>${esc(p.category)}</dd></dl>`;
+const modal = $("#modal"), player = $("#player");
+let modalGallery = null;
+function openModal(p, start = 0){
+  player.innerHTML = ""; player.className = "player"; modalGallery = null;
+  if (p.images && p.images.length){
+    if (p.square) player.classList.add("square");
+    modalGallery = gallery(player, p.images, start, p.title);
+  } else {
+    player.innerHTML = embed(p.video);
+  }
+  if (p.title === "__reel"){ $("#modalInfo").innerHTML = ""; }
+  else {
+    const rows = [["Client", p.client], ["Year", p.year], ["Apps", p.apps], ["Type", p.category]]
+      .filter(r => r[1]).map(r => `<dt>${r[0]}</dt><dd>${esc(r[1])}</dd>`).join("");
+    $("#modalInfo").innerHTML = `<div><h3>${esc(p.title)}</h3>${p.description ? `<p>${esc(p.description)}</p>` : ""}</div><dl>${rows}</dl>`;
+  }
   modal.classList.add("open"); modal.setAttribute("aria-hidden", "false");
   document.body.style.overflow = "hidden";
 }
 function closeModal(){
   modal.classList.remove("open"); modal.setAttribute("aria-hidden", "true");
-  document.body.style.overflow = "";
-  setTimeout(() => $("#player").innerHTML = "", 300);
+  document.body.style.overflow = ""; modalGallery = null;
+  setTimeout(() => { if (!modal.classList.contains("open")) player.innerHTML = ""; }, 300);
 }
 $("#reelBtn").addEventListener("click", () => openModal({ title: "__reel", video: CONFIG.showreel }));
 $("#close").addEventListener("click", closeModal);
 modal.addEventListener("click", e => { if (e.target === modal) closeModal(); });
-addEventListener("keydown", e => { if (e.key === "Escape") closeModal(); });
+addEventListener("keydown", e => {
+  if (!modal.classList.contains("open")) return;
+  if (e.key === "Escape") closeModal();
+  if (modalGallery && e.key === "ArrowRight") modalGallery.go(modalGallery.index + 1);
+  if (modalGallery && e.key === "ArrowLeft") modalGallery.go(modalGallery.index - 1);
+});
 
 /* --- reveal on scroll --- */
 const ro = new IntersectionObserver(es => es.forEach(e => { if (e.isIntersecting){ e.target.classList.add("in"); ro.unobserve(e.target); } }), { threshold: .12 });
