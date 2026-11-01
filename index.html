@@ -13,7 +13,7 @@
     --ink:#04060C;      /* bottom of the sky, page background */
     --night:#101A36;
     --steel:#3B5394;
-    --glacier:#8EA7E0;
+    --glacier:#86ECD6;
     --frost:#DCE5F7;
     --white:#F5F8FF;
     --muted:#8C9BBD;
@@ -39,8 +39,16 @@
 
   /* HERO */
   .hero{position:relative;min-height:100svh;display:flex;flex-direction:column;align-items:center;justify-content:center;padding:84px var(--pad) 72px;text-align:center;overflow:hidden;
-    background:linear-gradient(180deg,#C3D0F0 0%,#93ABE2 22%,#4F68AC 46%,#1B2852 68%,#080C1A 86%,var(--ink) 100%)}
+    --sky-0:#061026;--sky-1:#0F3460;--sky-2:#1B8AA6;--sky-3:#86ECD6;--horizon:#E2FFA8;
+    background:
+      radial-gradient(60% 20% at 50% 46%,rgba(226,255,168,.45),transparent 70%),
+      linear-gradient(180deg,var(--sky-0) 0%,var(--sky-1) 16%,var(--sky-2) 32%,var(--sky-3) 43%,var(--horizon) 48%,var(--sky-2) 54%,var(--ink) 66%)}
   .hero canvas{position:absolute;inset:0;width:100%;height:100%;display:block}
+  /* dunes + film grain behind the ASCII canvas */
+  .hero-bg{position:absolute;inset:0;pointer-events:none}
+  .hero-bg svg{position:absolute;inset:0;width:100%;height:100%}
+  .hero-bg::after{content:"";position:absolute;inset:0;opacity:.5;mix-blend-mode:overlay;
+    background-image:url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='220' height='220'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='.95' numOctaves='2' stitchTiles='stitch'/><feColorMatrix values='0 0 0 0 1  0 0 0 0 1  0 0 0 0 1  0 0 0 1.4 -.35'/></filter><rect width='100%' height='100%' filter='url(%23n)'/></svg>")}
   .art-space{position:relative;width:100%;flex:none;pointer-events:none}
   .hero-text{position:relative;z-index:1;max-width:1100px;transition:opacity .9s ease,transform .9s cubic-bezier(.2,.7,.2,1)}
   .hero.pre .hero-text{opacity:0;transform:translateY(16px)}
@@ -161,6 +169,27 @@
 
 <main>
 <section class="hero pre" id="top">
+  <div class="hero-bg" aria-hidden="true">
+    <svg viewBox="0 0 1440 900" preserveAspectRatio="none">
+      <defs>
+        <linearGradient id="duneA" x1="0" y1="0" x2="0" y2="1">
+          <stop offset="0" stop-color="#46E6CC" stop-opacity=".8"/>
+          <stop offset=".12" stop-color="#0A2630"/>
+          <stop offset=".62" stop-color="#04060C"/>
+        </linearGradient>
+        <linearGradient id="duneB" x1="0" y1="0" x2="0" y2="1">
+          <stop offset="0" stop-color="#46E6CC" stop-opacity=".65"/>
+          <stop offset=".2" stop-color="#0A2630"/>
+          <stop offset=".75" stop-color="#04060C"/>
+        </linearGradient>
+        <filter id="rimBlur"><feGaussianBlur stdDeviation="6"/></filter>
+      </defs>
+      <path d="M0,520 C300,470 430,300 720,295 C1010,300 1140,470 1440,520 L1440,900 L0,900Z" fill="url(#duneA)"/>
+      <path d="M0,520 C300,470 430,300 720,295 C1010,300 1140,470 1440,520" fill="none" stroke="#46E6CC" stroke-width="3" opacity=".5" filter="url(#rimBlur)"/>
+      <path d="M0,700 C240,615 520,650 770,700 C1010,748 1210,615 1440,652 L1440,900 L0,900Z" fill="url(#duneB)"/>
+      <path d="M0,700 C240,615 520,650 770,700 C1010,748 1210,615 1440,652" fill="none" stroke="#46E6CC" stroke-width="2.5" opacity=".4" filter="url(#rimBlur)"/>
+    </svg>
+  </div>
   <canvas id="ascii" aria-hidden="true"></canvas>
   <div class="art-space" id="artSpace"></div>
   <div class="hero-text">
@@ -343,7 +372,7 @@ $("#copy").textContent = `© ${new Date().getFullYear()} ${CONFIG.name}`;
     ctx.textAlign = "center"; ctx.textBaseline = "middle";
     /* field */
     ctx.font = `500 ${ffs}px ${getComputedStyle(document.body).getPropertyValue("--mono")}`;
-    ctx.fillStyle = "#F5F8FF";
+    ctx.fillStyle = "#E6FFF8";
     const intro = Math.min(1, t / 700);
     for (const f of field){
       if (!reduceMotion && Math.random() < .004) f.g = pick(FIELD_GLYPHS);
