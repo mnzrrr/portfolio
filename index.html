@@ -12,7 +12,7 @@
 <meta property="og:title" content="mnzrr">
 <meta property="og:description" content="3D and motion design portfolio of German Virre">
 <meta property="og:url" content="https://www.digibug.eu/">
-<meta property="og:image" content="https://www.digibug.eu/preview-scene.jpg">
+<meta property="og:image" content="https://www.digibug.eu/preview-glass.jpg">
 <meta property="og:image:width" content="1200">
 <meta property="og:image:height" content="630">
 <meta name="twitter:card" content="summary_large_image">
@@ -20,7 +20,7 @@
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400..700&family=Geist+Mono:wght@500;700&display=swap" rel="stylesheet">
 <style>
-  /* Wine-tinted neutral ramp — the colour lives in the hero scene and the renders */
+  /* Wine-tinted neutral ramp Р Р†Р вЂљРІР‚Сњ the colour lives in the hero scene and the renders */
   :root{
     --deep:#0C0A0A;
     --bg:#120E0F;
@@ -59,14 +59,13 @@
   .nav nav a.cta{margin-left:8px;padding:0 16px;background:var(--text);color:var(--deep);font-weight:500}
   .nav nav a.cta:hover{background:#fff}
 
-  /* HERO — the one rich moment: dusk dunes and the nickname assembling from glyphs */
+  /* HERO Р Р†Р вЂљРІР‚Сњ the one rich moment: wine light behind fluted glass and the nickname assembling from glyphs */
   .hero{position:relative;min-height:100svh;display:flex;flex-direction:column;align-items:center;justify-content:center;padding:96px var(--pad);text-align:center;overflow:hidden;
     background:
       radial-gradient(60% 20% at 50% 46%,rgba(255,110,100,.42),transparent 70%),
       linear-gradient(180deg,#0B0103 0%,#2A030A 16%,#6E0B1A 31%,#B3192F 42%,#FF8A7A 48%,#7A0F1F 54%,var(--bg) 66%)}
   .hero canvas{position:absolute;inset:0;width:100%;height:100%;display:block}
   .hero-bg{position:absolute;inset:0;pointer-events:none}
-  .hero-bg svg{position:absolute;inset:0;width:100%;height:100%}
   .hero-bg::after{content:"";position:absolute;inset:0;opacity:.5;mix-blend-mode:overlay;
     background-image:url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='220' height='220'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='.95' numOctaves='2' stitchTiles='stitch'/><feColorMatrix values='0 0 0 0 1  0 0 0 0 1  0 0 0 0 1  0 0 0 1.4 -.35'/></filter><rect width='100%' height='100%' filter='url(%23n)'/></svg>")}
   .art-space{position:relative;width:100%;flex:none;pointer-events:none}
@@ -207,27 +206,7 @@
 
 <main>
 <section class="hero pre" id="top">
-  <div class="hero-bg" aria-hidden="true">
-    <svg viewBox="0 0 1440 900" preserveAspectRatio="none">
-      <defs>
-        <linearGradient id="duneA" x1="0" y1="0" x2="0" y2="1">
-          <stop offset="0" stop-color="#FF4D63" stop-opacity=".8"/>
-          <stop offset=".12" stop-color="#2B050B"/>
-          <stop offset=".62" stop-color="#120E0F"/>
-        </linearGradient>
-        <linearGradient id="duneB" x1="0" y1="0" x2="0" y2="1">
-          <stop offset="0" stop-color="#FF4D63" stop-opacity=".65"/>
-          <stop offset=".2" stop-color="#2B050B"/>
-          <stop offset=".75" stop-color="#120E0F"/>
-        </linearGradient>
-        <filter id="rimBlur"><feGaussianBlur stdDeviation="6"/></filter>
-      </defs>
-      <path d="M0,520 C300,470 430,300 720,295 C1010,300 1140,470 1440,520 L1440,900 L0,900Z" fill="url(#duneA)"/>
-      <path d="M0,520 C300,470 430,300 720,295 C1010,300 1140,470 1440,520" fill="none" stroke="#FF4D63" stroke-width="3" opacity=".5" filter="url(#rimBlur)"/>
-      <path d="M0,700 C240,615 520,650 770,700 C1010,748 1210,615 1440,652 L1440,900 L0,900Z" fill="url(#duneB)"/>
-      <path d="M0,700 C240,615 520,650 770,700 C1010,748 1210,615 1440,652" fill="none" stroke="#FF4D63" stroke-width="2.5" opacity=".4" filter="url(#rimBlur)"/>
-    </svg>
-  </div>
+  <div class="hero-bg" aria-hidden="true"><canvas id="glass"></canvas></div>
   <canvas id="ascii" aria-hidden="true"></canvas>
   <div class="art-space" id="artSpace"></div>
   <div class="hero-text">
@@ -265,7 +244,7 @@
 <footer class="mono"><span id="copy"></span><a href="#top">Back to top</a></footer>
 
 <div class="modal" id="modal" aria-hidden="true" role="dialog" aria-modal="true">
-  <button class="close" id="close" aria-label="Close">×</button>
+  <button class="close" id="close" aria-label="Close">Р вЂњРІР‚вЂќ</button>
   <div class="modal-box">
     <div class="player" id="player"></div>
     <div class="modal-info" id="modalInfo"></div>
@@ -274,14 +253,14 @@
 
 <script>
 /* =====================================================================
-   ✏️  РЕДАКТИРУЙ ТОЛЬКО ЭТОТ БЛОК — всё остальное соберётся само
+   Р Р†РЎС™Р РЏР С—РЎвЂР РЏ  Р В Р’В Р В РІР‚СћР В РІР‚СњР В РЎвЂ™Р В РЎв„ўР В РЎС›Р В Р’ВР В Р’В Р В Р в‚¬Р В РІвЂћСћ Р В РЎС›Р В РЎвЂєР В РІР‚С”Р В Р’В¬Р В РЎв„ўР В РЎвЂє Р В Р’В­Р В РЎС›Р В РЎвЂєР В РЎС› Р В РІР‚ВР В РІР‚С”Р В РЎвЂєР В РЎв„ў Р Р†Р вЂљРІР‚Сњ Р В Р вЂ Р РЋР С“Р РЋРІР‚В Р В РЎвЂўР РЋР С“Р РЋРІР‚С™Р В Р’В°Р В Р’В»Р РЋР Р‰Р В Р вЂ¦Р В РЎвЂўР В Р’Вµ Р РЋР С“Р В РЎвЂўР В Р’В±Р В Р’ВµР РЋР вЂљР РЋРІР‚ВР РЋРІР‚С™Р РЋР С“Р РЋР РЏ Р РЋР С“Р В Р’В°Р В РЎВР В РЎвЂў
    ---------------------------------------------------------------------
    video:  { type: "vimeo",   src: "https://vimeo.com/123456789" }
            { type: "youtube", src: "https://youtu.be/XXXXXXXXXXX" }
            { type: "mp4",     src: "assets/video/file.mp4" }
-   images: ["assets/img/a.jpg", "assets/img/b.jpg"]  — галерея со стрелками
-   thumb:  обложка карточки (для Vimeo подтягивается сама, если пусто)
-   wide: true — на всю ширину · vertical: true — вертикальное видео 9:16
+   images: ["assets/img/a.jpg", "assets/img/b.jpg"]  Р Р†Р вЂљРІР‚Сњ Р В РЎвЂ“Р В Р’В°Р В Р’В»Р В Р’ВµР РЋР вЂљР В Р’ВµР РЋР РЏ Р РЋР С“Р В РЎвЂў Р РЋР С“Р РЋРІР‚С™Р РЋР вЂљР В Р’ВµР В Р’В»Р В РЎвЂќР В Р’В°Р В РЎВР В РЎвЂ
+   thumb:  Р В РЎвЂўР В Р’В±Р В Р’В»Р В РЎвЂўР В Р’В¶Р В РЎвЂќР В Р’В° Р В РЎвЂќР В Р’В°Р РЋР вЂљР РЋРІР‚С™Р В РЎвЂўР РЋРІР‚РЋР В РЎвЂќР В РЎвЂ (Р В РўвЂР В Р’В»Р РЋР РЏ Vimeo Р В РЎвЂ”Р В РЎвЂўР В РўвЂР РЋРІР‚С™Р РЋР РЏР В РЎвЂ“Р В РЎвЂР В Р вЂ Р В Р’В°Р В Р’ВµР РЋРІР‚С™Р РЋР С“Р РЋР РЏ Р РЋР С“Р В Р’В°Р В РЎВР В Р’В°, Р В Р’ВµР РЋР С“Р В Р’В»Р В РЎвЂ Р В РЎвЂ”Р РЋРЎвЂњР РЋР С“Р РЋРІР‚С™Р В РЎвЂў)
+   wide: true Р Р†Р вЂљРІР‚Сњ Р В Р вЂ¦Р В Р’В° Р В Р вЂ Р РЋР С“Р РЋР вЂ№ Р РЋРІвЂљВ¬Р В РЎвЂР РЋР вЂљР В РЎвЂР В Р вЂ¦Р РЋРЎвЂњ Р вЂ™Р’В· vertical: true Р Р†Р вЂљРІР‚Сњ Р В Р вЂ Р В Р’ВµР РЋР вЂљР РЋРІР‚С™Р В РЎвЂР В РЎвЂќР В Р’В°Р В Р’В»Р РЋР Р‰Р В Р вЂ¦Р В РЎвЂўР В Р’Вµ Р В Р вЂ Р В РЎвЂР В РўвЂР В Р’ВµР В РЎвЂў 9:16
    ===================================================================== */
 const CONFIG = {
   name: "German Virre",
@@ -317,9 +296,9 @@ const PROJECTS = [
     description: "A small 3D animation dedicated to the FIFA World Cup.",
     video: { type: "vimeo", src: "https://vimeo.com/1237770995" }, vertical: true }
 ];
-/* ======================= конец блока настроек ======================== */
+/* ======================= Р В РЎвЂќР В РЎвЂўР В Р вЂ¦Р В Р’ВµР РЋРІР‚В  Р В Р’В±Р В Р’В»Р В РЎвЂўР В РЎвЂќР В Р’В° Р В Р вЂ¦Р В Р’В°Р РЋР С“Р РЋРІР‚С™Р РЋР вЂљР В РЎвЂўР В Р’ВµР В РЎвЂќ ======================== */
 
-/* ASCII nickname — собирается из символов на первом экране */
+/* ASCII nickname Р Р†Р вЂљРІР‚Сњ Р РЋР С“Р В РЎвЂўР В Р’В±Р В РЎвЂР РЋР вЂљР В Р’В°Р В Р’ВµР РЋРІР‚С™Р РЋР С“Р РЋР РЏ Р В РЎвЂР В Р’В· Р РЋР С“Р В РЎвЂР В РЎВР В Р вЂ Р В РЎвЂўР В Р’В»Р В РЎвЂўР В Р вЂ  Р В Р вЂ¦Р В Р’В° Р В РЎвЂ”Р В Р’ВµР РЋР вЂљР В Р вЂ Р В РЎвЂўР В РЎВ Р РЋР РЉР В РЎвЂќР РЋР вЂљР В Р’В°Р В Р вЂ¦Р В Р’Вµ */
 const ART = ["                 :   ..    .  :.:                                                                            :...     .::", "                :........ :........  :.                                                                      ....:  .....:", "           :..:.:...:.... :...........:                   :.                                                 ...........:", "          ........: ......... :......                     ..:                                            ..............:..::", "        :: ....:...  ....::..  :...:                      .........................:                     :........::.......", "       ....:.......: .....:..  .....                      :..:.            .....::  ::::.       .:       ........:  :....:", "       ............. :......   :....                      ..::            ......  :.......::   ..:       ::.....:   :.....", "        :.......... .....:...  ....:                      ..            ......: :..:.............::.....   ......    .....:", "       .......: .............:..........:.:            .........:      :.....  :.      .::........:.....:. ......    .....::", "       :....... .........::....................:         .....:      ......:   ..         . ....   .......::.......::.........", "       ...:........:.....::.:..:......................:.:.....::::::.....:      :..     :.......     :.................... :..", "        . ......:..  ........  ....:........:.   ...:      ..:.:..........::.:....     .........       ...........:....:", "           :...:..:  .....:.:  .... ...:...:      :...     ..    :..............:   :::.........       ..........:  :.......", "          ....: ..: :.... :..  ....: .. ..:         ..     .:   ......          .:..............       :.::.......:  .:...", "          :..   :..  ....:::   ..... :. ....    .:.        .: ......:          :................    ..:............:   :..:::", "   .::.....::.  ..: ........:::.....::. :...:   .....      ..:.....                ...:.............................    .:....:", "  ..................:..................  .....:   ....     .......               :... :.......................::.:..:     .....:", " :..............:.    ......:  ........  :......:......   :......              :.....  .........  .......:.....   ....:    .....::", " ..:.    ..::.:.        :.:     .... ..   :.............:............................ ..........   ..........:      :....  ....:...:", "...                             ...  ..    :................:                      :............    .........:              :..", ":..                             ::   ..      ..:.............                     .:............     :.......", " ...                            ..   ..          .:..........                         ..........      ......:", "  ...                           ..:  ..              :.......                          ...:...::       .......", "   ::....:...                    ...:..:               .....:                         ...: ...:         ......:   ::", "       .::..                     ........:.             .....                         ..:.:..            :.....:..:", "                                 :.:....:..       :.      :.:                     :::..........::         ......:", "                                    .:...:  .:.  .:..                         :...::..:........:            ...", "                                      ::.....:.........::..::               ::...", "                                         .:...........:.                    .:", "                                                ..:::..                    ::", "                                               .:    .:.:                  ..:", "                                               .       :.:                  ......", "                                                         :."];
 
 const $ = s => document.querySelector(s);
@@ -341,7 +320,80 @@ $("#mail").textContent = CONFIG.email;
 $("#mail").href = `mailto:${CONFIG.email}`;
 const OUT = `<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M7 17L17 7M8 7h9v9"/></svg>`;
 $("#socials").innerHTML = CONFIG.socials.map(s => `<a href="${esc(s.url)}" target="_blank" rel="noopener">${esc(s.label)} ${OUT}</a>`).join("");
-$("#copy").textContent = `© ${new Date().getFullYear()} ${CONFIG.name}`;
+$("#copy").textContent = `Р вЂ™Р’В© ${new Date().getFullYear()} ${CONFIG.name}`;
+
+/* ---------------- fluted glass backdrop ---------------- */
+(function glassHero(){
+  const hero = $("#top"), cv = $("#glass");
+  const gl = cv.getContext("webgl", { antialias: false, alpha: false, premultipliedAlpha: false, preserveDrawingBuffer: true });
+  if (!gl){ cv.remove(); return; }   // the CSS gradient on .hero stays as the fallback
+
+  const VS = `attribute vec2 a; void main(){ gl_Position = vec4(a, 0., 1.); }`;
+  const FS = `precision highp float;
+  uniform vec2 res; uniform float time, flute;
+  float h(vec2 p){ return fract(sin(dot(p, vec2(127.1, 311.7))) * 43758.5453); }
+  float n(vec2 p){ vec2 i = floor(p), f = fract(p); f = f * f * (3. - 2. * f);
+    return mix(mix(h(i), h(i + vec2(1, 0)), f.x), mix(h(i + vec2(0, 1)), h(i + vec2(1, 1)), f.x), f.y); }
+  float fbm(vec2 p){ float v = 0., a = .5; for (int i = 0; i < 5; i++){ v += a * n(p); p = p * 2.03 + 7.1; a *= .5; } return v; }
+  vec3 ramp(float v){
+    vec3 c = mix(vec3(.043, .004, .012), vec3(.23, .02, .063), smoothstep(.0, .35, v));
+    c = mix(c, vec3(.56, .063, .14), smoothstep(.3, .6, v));
+    c = mix(c, vec3(.83, .16, .25), smoothstep(.55, .82, v));
+    return mix(c, vec3(1., .54, .48), smoothstep(.8, 1., v));
+  }
+  vec3 scene(vec2 q){
+    vec2 w = vec2(fbm(q * 1.3 + vec2(0., time * .05)), fbm(q * 1.3 + vec2(5.2, -time * .04)));
+    float v = fbm(q * 1.7 + w * 1.6 + vec2(time * .03, 0.));
+    return ramp(smoothstep(.36, .88, v));
+  }
+  void main(){
+    vec2 p = vec2(gl_FragCoord.x, res.y - gl_FragCoord.y);
+    vec2 nrm = vec2(.70710678, -.70710678), dir = vec2(.70710678, .70710678);   // flutes run at -45deg
+    float s = dot(p, nrm) / flute, id = floor(s), f = fract(s);
+    float lens = (f - .5) * flute * -2.2;                 // each flute flips and magnifies what is behind it
+    vec2 sp = p + nrm * lens + dir * (h(vec2(id, 3.)) - .5) * flute * 1.5;
+    vec3 col = scene(sp / res.y);
+    col *= .55 + .45 * sin(f * 3.14159);                  // rounded profile
+    col += vec3(1., .72, .68) * pow(f, 18.) * .35;        // thin specular on one edge
+    col *= .35 + .65 * smoothstep(0., .06, f);            // seam between flutes
+    float y = p.y / res.y;
+    col = mix(col, vec3(.071, .055, .059), smoothstep(.62, 1., y));   // melt into --bg
+    gl_FragColor = vec4(col, 1.);
+  }`;
+
+  function sh(type, src){ const s = gl.createShader(type); gl.shaderSource(s, src); gl.compileShader(s); return s; }
+  const pr = gl.createProgram();
+  gl.attachShader(pr, sh(gl.VERTEX_SHADER, VS)); gl.attachShader(pr, sh(gl.FRAGMENT_SHADER, FS));
+  gl.linkProgram(pr);
+  if (!gl.getProgramParameter(pr, gl.LINK_STATUS)){ cv.remove(); return; }
+  gl.useProgram(pr);
+  gl.bindBuffer(gl.ARRAY_BUFFER, gl.createBuffer());
+  gl.bufferData(gl.ARRAY_BUFFER, new Float32Array([-1, -1, 3, -1, -1, 3]), gl.STATIC_DRAW);
+  const a = gl.getAttribLocation(pr, "a");
+  gl.enableVertexAttribArray(a); gl.vertexAttribPointer(a, 2, gl.FLOAT, false, 0, 0);
+  const uRes = gl.getUniformLocation(pr, "res"), uTime = gl.getUniformLocation(pr, "time"), uFlute = gl.getUniformLocation(pr, "flute");
+
+  let scale = 1, running = false, raf;
+  function size(){
+    scale = Math.min(devicePixelRatio || 1, 1.5);
+    cv.width = Math.round(hero.clientWidth * scale); cv.height = Math.round(hero.clientHeight * scale);
+    gl.viewport(0, 0, cv.width, cv.height);
+  }
+  function draw(now){
+    gl.uniform2f(uRes, cv.width, cv.height);
+    gl.uniform1f(uTime, 12 + now / 1000);
+    gl.uniform1f(uFlute, (hero.clientWidth < 760 ? 26 : 36) * scale);
+    gl.drawArrays(gl.TRIANGLES, 0, 3);
+  }
+  function loop(now){ draw(now); if (running) raf = requestAnimationFrame(loop); }
+  function start(){ if (running || reduceMotion) return; running = true; raf = requestAnimationFrame(loop); }
+  function stop(){ running = false; cancelAnimationFrame(raf); }
+
+  size(); draw(0);
+  new IntersectionObserver(([e]) => e.isIntersecting ? start() : stop()).observe(hero);
+  document.addEventListener("visibilitychange", () => document.hidden ? stop() : start());
+  new ResizeObserver(() => { size(); draw(reduceMotion ? 0 : performance.now()); }).observe(hero);
+})();
 
 /* ---------------- ASCII hero ---------------- */
 (function asciiHero(){
