@@ -356,8 +356,10 @@ $("#copy").textContent = `© ${new Date().getFullYear()} ${CONFIG.name}`;
     vec2 sp = p + nrm * lens + dir * (h(vec2(id, 3.)) - .5) * flute * 1.5;
     vec3 col = scene(sp / res.y);
     col *= .55 + .45 * sin(f * 3.14159);                  // rounded profile
-    col += vec3(1., .72, .68) * pow(f, 18.) * .35;        // thin specular on one edge
-    col *= .35 + .65 * smoothstep(0., .06, f);            // seam between flutes
+    float px = flute / 36. * 1.4;                         // ~1.4 css px, for antialiasing
+    float e0 = f * flute, e1 = (1. - f) * flute;          // distance to both edges in device px
+    col += vec3(1., .72, .68) * pow(f, 18.) * .35 * smoothstep(0., px, e1);   // thin specular on one edge
+    col *= .35 + .65 * smoothstep(0., 2. * px, min(e0, e1));                 // soft seam, no stair steps
     float y = p.y / res.y;
     col = mix(col, vec3(.071, .055, .059), smoothstep(.62, 1., y));   // melt into --bg
     gl_FragColor = vec4(col, 1.);
