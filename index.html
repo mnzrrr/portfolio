@@ -109,9 +109,9 @@
   .peek:nth-child(2){left:28%;--r:2deg;top:7%}
   .peek:nth-child(3){left:47%;--r:8deg}
   .peek:only-child{left:27%;--r:-3deg}
-  .fold-front{position:absolute;left:0;right:0;bottom:0;top:26%;border-radius:16px;overflow:hidden;
-    background:linear-gradient(180deg,rgba(226,116,130,.5),rgba(170,46,66,.62) 70%,rgba(150,36,56,.7));
-    -webkit-backdrop-filter:blur(18px) saturate(140%);backdrop-filter:blur(18px) saturate(140%);
+  .fold-front{position:absolute;left:0;right:0;bottom:0;top:26%;border-radius:4.4%/7.43%;overflow:hidden;
+    background:linear-gradient(180deg,rgba(236,130,144,.26),rgba(180,52,72,.3) 70%,rgba(160,40,60,.36));
+    -webkit-backdrop-filter:blur(7px) saturate(130%);backdrop-filter:blur(7px) saturate(130%);
     box-shadow:inset 0 1px 0 rgba(255,236,238,.5),inset 0 -1px 0 rgba(60,0,12,.35),0 -1px 0 rgba(0,0,0,.15)}
   .fold-front::before{content:"";position:absolute;inset:0;opacity:.35;mix-blend-mode:overlay;
     background-image:url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='160' height='160'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='.9' numOctaves='2' stitchTiles='stitch'/><feColorMatrix values='0 0 0 0 1  0 0 0 0 1  0 0 0 0 1  0 0 0 1.2 -.3'/></filter><rect width='100%' height='100%' filter='url(%23n)'/></svg>")}
@@ -250,7 +250,6 @@
     .work .sec-title{margin-bottom:32px}
     .folders{grid-template-columns:repeat(3,minmax(0,1fr));gap:32px 12px}
     .folder{gap:14px}
-    .fold-front{border-radius:12px}
     .folder-label b{font-size:14px;line-height:20px}
     .folder-label .mono{font-size:11px}
     .skills,.about{padding:72px 0}
