@@ -96,7 +96,7 @@
   .folder:focus-visible{outline:2px solid var(--accent);outline-offset:12px}
   .folder.quiet,.icon.quiet{outline:none!important}
   .folder.quiet:not(:hover) .peek{transform:rotate(var(--r))}
-  .icon.quiet{background:none}
+  .icon.quiet:not(:hover){background:none!important}
   .icon.quiet span{background:none!important;color:#1E1A1B!important}
   .folder.dragging{z-index:5;cursor:grabbing}
   .fold{position:relative;width:100%;aspect-ratio:5/4;transition:transform 250ms var(--ease)}
