@@ -94,6 +94,10 @@
   .folder{position:relative;display:flex;flex-direction:column;gap:24px;text-align:left;cursor:grab;border-radius:16px;
     touch-action:manipulation;user-select:none;-webkit-user-select:none;-webkit-touch-callout:none}
   .folder:focus-visible{outline:2px solid var(--accent);outline-offset:12px}
+  .folder.quiet,.icon.quiet{outline:none!important}
+  .folder.quiet:not(:hover) .peek{transform:rotate(var(--r))}
+  .icon.quiet{background:none}
+  .icon.quiet span{background:none!important;color:#1E1A1B!important}
   .folder.dragging{z-index:5;cursor:grabbing}
   .fold{position:relative;width:100%;aspect-ratio:5/4;transition:transform 250ms var(--ease)}
   .folder.dragging .fold,.folder.lifted .fold{transform:scale(1.04)}
@@ -723,6 +727,8 @@ addEventListener("scroll", onScroll, { passive: true }); onScroll();
 /* ---------------- windows: Finder for a folder, Get Info for a work ---------------- */
 const desk = $("#desk"), finder = $("#finder"), info = $("#info"), main = $("main");
 let infoGallery = null, folderOpener = null, iconOpener = null;
+/* give focus back to what opened the window without drawing a focus ring around it */
+const quietFocus = el => { if (!el) return; el.classList.add("quiet"); el.focus({ preventScroll: true }); el.addEventListener("blur", () => el.classList.remove("quiet"), { once: true }); };
 
 function openFolder(f, opener){
   folderOpener = opener;
@@ -756,13 +762,13 @@ function openInfo(p, f, opener){
 function closeInfo(){
   info.classList.remove("show"); finder.classList.remove("behind");
   $("#infoBody").innerHTML = ""; infoGallery = null;
-  iconOpener?.focus();
+  quietFocus(iconOpener);
 }
 function closeFolder(){
   if (info.classList.contains("show")) closeInfo();
   finder.classList.remove("show"); desk.classList.remove("open"); desk.setAttribute("aria-hidden", "true");
   main.inert = false; document.body.style.overflow = "";
-  folderOpener?.focus();
+  quietFocus(folderOpener);
 }
 const closeTop = () => info.classList.contains("show") ? closeInfo() : closeFolder();
 
