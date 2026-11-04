@@ -90,10 +90,14 @@
   /* WORK — projects kept in folders: wine glass in front, the works blurred behind it */
   .work{padding:128px 0 160px;border-top:1px solid var(--line)}
   .work .sec-title{margin-bottom:64px}
-  .folders{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:64px 48px}
-  .folder{display:flex;flex-direction:column;gap:24px;text-align:left;cursor:pointer;border-radius:16px}
+  .folders{display:grid;grid-template-columns:repeat(3,minmax(0,360px));gap:64px;justify-content:space-between}
+  .folder{position:relative;display:flex;flex-direction:column;gap:24px;text-align:left;cursor:grab;border-radius:16px;
+    touch-action:manipulation;user-select:none;-webkit-user-select:none;-webkit-touch-callout:none}
   .folder:focus-visible{outline:2px solid var(--accent);outline-offset:12px}
-  .fold{position:relative;width:100%;aspect-ratio:5/4}
+  .folder.dragging{z-index:5;cursor:grabbing}
+  .fold{position:relative;width:100%;aspect-ratio:5/4;transition:transform 250ms var(--ease)}
+  .folder.dragging .fold,.folder.lifted .fold{transform:scale(1.04)}
+  .peeks{position:absolute;inset:0}
   .fold-back{position:absolute;inset:0;width:100%;height:100%;overflow:visible;filter:drop-shadow(0 24px 32px rgba(0,0,0,.5))}
   .peek{position:absolute;top:10%;width:46%;aspect-ratio:4/3;border-radius:6px;background:var(--deep) center/cover no-repeat;
     box-shadow:0 8px 20px rgba(0,0,0,.4),0 0 0 1px rgba(255,255,255,.08);transform:rotate(var(--r)) translateY(0);transition:transform 600ms var(--ease)}
@@ -667,11 +671,49 @@ const folders = folderNames.map(name => ({ name, items: PROJECTS.filter(p => p.f
 $("#folders").innerHTML = folders.map((f, i) => {
   const peeks = f.items.flatMap(p => p.images && p.images.length ? p.images : [cover(p)]).filter(Boolean).slice(0, 3);
   return `<button class="folder" data-i="${i}" aria-label="Open folder ${esc(f.name)}, ${plural(f.items.length)}">
-    <span class="fold">${FOLDER_BACK}${peeks.map(src => `<span class="peek" style="background-image:url('${esc(src)}')"></span>`).join("")}<span class="fold-front"></span></span>
+    <span class="fold">${FOLDER_BACK}<span class="peeks">${peeks.map(src => `<span class="peek" style="background-image:url('${esc(src)}')"></span>`).join("")}</span><span class="fold-front"></span></span>
     <span class="folder-label"><b>${esc(f.name)}</b><span class="mono">${plural(f.items.length)}</span></span>
   </button>`;
 }).join("");
-$("#folders").addEventListener("click", e => { const b = e.target.closest(".folder"); if (b) openFolder(folders[+b.dataset.i], b); });
+$("#folders").addEventListener("click", e => { const b = e.target.closest(".folder"); if (b && !b.dataset.dragged) openFolder(folders[+b.dataset.i], b); });
+
+/* folders can be moved around like icons on a desktop: mouse drags at once,
+   a finger has to hold for a moment first so the page still scrolls normally */
+document.querySelectorAll(".folder").forEach(el => {
+  const area = $("#work");
+  let id = null, sx = 0, sy = 0, ox = 0, oy = 0, bx = 0, by = 0, armed = false, moved = false, hold, lim;
+  const reset = () => { clearTimeout(hold); id = null; armed = false; el.classList.remove("lifted", "dragging"); };
+  el.addEventListener("pointerdown", e => {
+    if (e.button) return;
+    id = e.pointerId; sx = e.clientX; sy = e.clientY; bx = ox; by = oy; moved = false;
+    armed = e.pointerType === "mouse";
+    if (!armed) hold = setTimeout(() => { armed = true; el.classList.add("lifted"); navigator.vibrate?.(8); }, 280);
+  });
+  el.addEventListener("pointermove", e => {
+    if (e.pointerId !== id) return;
+    const dx = e.clientX - sx, dy = e.clientY - sy;
+    if (!armed){ if (Math.hypot(dx, dy) > 8) reset(); return; }
+    if (!moved){
+      if (Math.hypot(dx, dy) < 5) return;
+      moved = true; el.classList.add("dragging");
+      try { el.setPointerCapture(id); } catch {}
+      const r = el.getBoundingClientRect(), a = area.getBoundingClientRect();
+      lim = { x0: a.left - (r.left - ox), x1: a.right - (r.right - ox), y0: a.top - (r.top - oy), y1: a.bottom - (r.bottom - oy) };
+    }
+    ox = Math.min(lim.x1, Math.max(lim.x0, bx + dx));
+    oy = Math.min(lim.y1, Math.max(lim.y0, by + dy));
+    el.style.translate = `${ox}px ${oy}px`;
+  });
+  const end = e => {
+    if (e.pointerId !== id) return;
+    if (moved){ el.dataset.dragged = "1"; setTimeout(() => delete el.dataset.dragged, 0); }
+    reset();
+  };
+  el.addEventListener("pointerup", end);
+  el.addEventListener("pointercancel", end);
+  el.addEventListener("touchmove", e => { if (armed) e.preventDefault(); }, { passive: false });
+  el.addEventListener("contextmenu", e => { if (armed || e.pointerType === "touch") e.preventDefault(); });
+});
 
 /* ---------------- nav: solid bar once the hero scrolls away ---------------- */
 const nav = $(".nav");
