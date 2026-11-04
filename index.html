@@ -88,7 +88,7 @@
   .grid12{display:grid;grid-template-columns:repeat(12,minmax(0,1fr));column-gap:24px}
 
   /* WORK — five projects at their real proportions, in an asymmetric run */
-  .work{padding:120px 0 160px}
+  .work{padding:128px 0 160px;border-top:1px solid var(--line)}
   .work .sec-title{margin-bottom:56px}
   .works{row-gap:112px;align-items:start}
   .piece{grid-column:span 6;cursor:pointer;border-radius:4px}
@@ -142,7 +142,7 @@
   @media (hover:hover){ .piece .arr{opacity:0} .piece:hover .arr,.piece .arr:focus-visible{opacity:1} }
 
   /* 3D / MOTION — the skills set as type, no containers */
-  .skills{padding:128px 0;border-top:1px solid var(--line)}
+  .skills{padding:120px 0 128px}
   .skills .grid12{row-gap:64px;align-items:start}
   .skill h2{font-size:120px;line-height:.9;letter-spacing:-.05em;margin-bottom:40px}
   .skill:nth-child(1){grid-column:1 / span 4}
@@ -271,15 +271,15 @@
   </div>
 </section>
 
+<section class="skills" id="skills" aria-label="What I do">
+  <div class="wrap grid12" id="offer"></div>
+</section>
+
 <section class="work" id="work">
   <div class="wrap">
     <h2 class="sec-title">Selected work</h2>
     <div class="grid12 works" id="grid"></div>
   </div>
-</section>
-
-<section class="skills" id="skills" aria-label="What I do">
-  <div class="wrap grid12" id="offer"></div>
 </section>
 
 <section class="about" id="about">
