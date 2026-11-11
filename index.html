@@ -541,7 +541,7 @@ $("#copy").textContent = `© ${new Date().getFullYear()} ${CONFIG.name}`;
   const U = n => gl.getUniformLocation(pr, n);
   const PAL = {
     dark:  { k: [[.043, .004, .012], [.23, .02, .063], [.56, .063, .14], [.83, .16, .25], [1, .54, .48]], shade: [0, 0, 0], spec: [1, .72, .68], bgc: [.071, .055, .059], lit: 0 },
-    light: { k: [[1, 1, 1], [.93, .9, .985], [.78, .69, .94], [.55, .42, .82], [.36, .23, .62]], shade: [.5, .38, .76], spec: [1, 1, 1], bgc: [1, 1, 1], lit: 1 }
+    light: { k: [[.955, .935, .995], [.875, .83, .97], [.74, .645, .93], [.55, .42, .82], [.36, .23, .62]], shade: [.5, .38, .76], spec: [1, 1, 1], bgc: [1, 1, 1], lit: 1 }
   };
   function palette(){
     const p = PAL[document.documentElement.dataset.theme === "light" ? "light" : "dark"];
