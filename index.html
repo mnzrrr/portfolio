@@ -105,9 +105,18 @@
   .nav nav a.cta:hover{background:var(--btn-hover);color:var(--deep)}
   /* theme switch: a split circle showing the other theme's two colours */
   .theme{position:relative;flex:none;width:36px;height:36px;margin-left:8px;border-radius:50%;display:grid;place-items:center}
-  .theme i{width:18px;height:18px;border-radius:50%;background:linear-gradient(135deg,#FFFFFF 50%,#6B42B8 50%);box-shadow:0 0 0 1px var(--line-strong);transition:transform 450ms var(--ease)}
-  :root[data-theme="light"] .theme i{background:linear-gradient(135deg,#120E0F 50%,#B3192F 50%)}
-  .theme:hover i{transform:rotate(180deg)}
+  /* a drop of liquid glass: the two colours of the other theme bleed into each other under a gloss */
+  .theme i{position:relative;width:22px;height:22px;border-radius:50%;overflow:hidden;box-shadow:0 0 0 1px var(--line-strong),0 3px 8px rgba(0,0,0,.35)}
+  .theme i::before{content:"";position:absolute;inset:-1px;border-radius:50%;transition:transform 700ms var(--ease);
+    background:radial-gradient(75% 75% at 30% 26%,#FFFFFF 0%,rgba(255,255,255,0) 72%),radial-gradient(85% 85% at 74% 78%,#5A35AE 0%,rgba(90,53,174,0) 78%),#B79CEC}
+  .theme i::after{content:"";position:absolute;inset:0;border-radius:50%;
+    background:radial-gradient(52% 34% at 44% 22%,rgba(255,255,255,.8),rgba(255,255,255,0) 100%);
+    box-shadow:inset 0 1px 1px rgba(255,255,255,.75),inset 0 -3px 5px rgba(30,10,70,.35),inset 0 0 0 .5px rgba(255,255,255,.35)}
+  :root[data-theme="light"] .theme i{box-shadow:0 0 0 1px var(--line-strong),0 3px 8px rgba(46,26,84,.25)}
+  :root[data-theme="light"] .theme i::before{background:radial-gradient(75% 75% at 30% 26%,#F0525F 0%,rgba(240,82,95,0) 72%),radial-gradient(85% 85% at 74% 78%,#120E0F 0%,rgba(18,14,15,0) 78%),#6E0B1A}
+  :root[data-theme="light"] .theme i::after{background:radial-gradient(52% 34% at 44% 22%,rgba(255,255,255,.55),rgba(255,255,255,0) 100%);
+    box-shadow:inset 0 1px 1px rgba(255,255,255,.5),inset 0 -3px 5px rgba(0,0,0,.5),inset 0 0 0 .5px rgba(255,255,255,.25)}
+  .theme:hover i::before{transform:rotate(180deg)}
   .theme:focus-visible{border-radius:50%}
 
   /* HERO — the one rich moment: wine light behind fluted glass and the nickname assembling from glyphs */
