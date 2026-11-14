@@ -549,10 +549,9 @@ $("#copy").textContent = `© ${new Date().getFullYear()} ${CONFIG.name}`;
     gl.uniform3fv(U("shade"), p.shade); gl.uniform3fv(U("spec"), p.spec); gl.uniform3fv(U("bgc"), p.bgc); gl.uniform1f(U("lit"), p.lit);
   }
 
-  let scale = 1, q = 1, slow = 0, lastT = 0, running = false, raf;
+  let scale = 1, running = false, raf;
   function size(){
-    /* never more than ~2M pixels, and q drops further when frames run slow */
-    scale = Math.min(devicePixelRatio || 1, 1.5, Math.sqrt(2.1e6 / Math.max(1, hero.clientWidth * hero.clientHeight))) * q;
+    scale = Math.min(devicePixelRatio || 1, 1.5);
     cv.width = Math.round(hero.clientWidth * scale); cv.height = Math.round(hero.clientHeight * scale);
     gl.viewport(0, 0, cv.width, cv.height);
   }
@@ -562,12 +561,7 @@ $("#copy").textContent = `© ${new Date().getFullYear()} ${CONFIG.name}`;
     gl.uniform1f(uFlute, (hero.clientWidth < 760 ? 26 : 36) * scale);
     gl.drawArrays(gl.TRIANGLES, 0, 3);
   }
-  function loop(now){
-    const dt = now - lastT; lastT = now;
-    if (dt > 26 && dt < 250) slow++; else if (slow > 0) slow--;
-    if (slow > 40 && q > .45){ q *= .75; slow = 0; size(); }   // sustained slow frames: render fewer pixels
-    draw(now); if (running) raf = requestAnimationFrame(loop);
-  }
+  function loop(now){ draw(now); if (running) raf = requestAnimationFrame(loop); }
   function start(){ if (running || reduceMotion) return; running = true; raf = requestAnimationFrame(loop); }
   function stop(){ running = false; cancelAnimationFrame(raf); }
 
@@ -590,7 +584,6 @@ $("#copy").textContent = `© ${new Date().getFullYear()} ${CONFIG.name}`;
 
   let W, H, dpr, cw, ch, fs, ffs, ox, oy, field = [], parts = [], t0 = 0, done = false, running = false, raf;
   let pointer = { x: -1e4, y: -1e4, on: false };
-  const MONO = getComputedStyle(document.body).getPropertyValue("--mono");   // read once, not every frame
   let glyph = "#FFE6E1", fieldK = 1;
   const ink = () => { glyph = getComputedStyle(document.documentElement).getPropertyValue("--glyph").trim() || "#FFE6E1"; fieldK = document.documentElement.dataset.theme === "light" ? .5 : 1; };
   ink();
@@ -650,7 +643,7 @@ $("#copy").textContent = `© ${new Date().getFullYear()} ${CONFIG.name}`;
     ctx.clearRect(0, 0, W, H);
     ctx.textAlign = "center"; ctx.textBaseline = "middle";
     /* field */
-    ctx.font = `500 ${ffs}px ${MONO}`;
+    ctx.font = `500 ${ffs}px ${getComputedStyle(document.body).getPropertyValue("--mono")}`;
     ctx.fillStyle = glyph;
     const intro = Math.min(1, t / 700);
     for (const f of field){
@@ -661,7 +654,7 @@ $("#copy").textContent = `© ${new Date().getFullYear()} ${CONFIG.name}`;
       ctx.fillText(f.g, f.x, f.y);
     }
     /* nickname */
-    ctx.font = `700 ${fs}px ${MONO}`;
+    ctx.font = `700 ${fs}px ${getComputedStyle(document.body).getPropertyValue("--mono")}`;
     let settled = 0;
     const R = Math.max(70, cw * 14);
     for (const p of parts){
