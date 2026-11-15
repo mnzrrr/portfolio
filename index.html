@@ -584,8 +584,8 @@ $("#copy").textContent = `© ${new Date().getFullYear()} ${CONFIG.name}`;
 
   let W, H, dpr, cw, ch, fs, ffs, ox, oy, field = [], parts = [], t0 = 0, done = false, running = false, raf;
   let pointer = { x: -1e4, y: -1e4, on: false };
-  let glyph = "#FFE6E1", fieldK = 1;
-  const ink = () => { glyph = getComputedStyle(document.documentElement).getPropertyValue("--glyph").trim() || "#FFE6E1"; fieldK = document.documentElement.dataset.theme === "light" ? .5 : 1; };
+  let glyph = "#FFE6E1", fieldK = 1, bold = false;   // bold: dark ink on a light ground reads thinner, so it gets a hairline stroke
+  const ink = () => { glyph = getComputedStyle(document.documentElement).getPropertyValue("--glyph").trim() || "#FFE6E1"; fieldK = document.documentElement.dataset.theme === "light" ? .5 : 1; bold = fieldK < 1; };
   ink();
   document.addEventListener("themechange", () => { ink(); if (reduceMotion && parts.length) draw(performance.now() + 1e5); });
 
@@ -655,6 +655,8 @@ $("#copy").textContent = `© ${new Date().getFullYear()} ${CONFIG.name}`;
     }
     /* nickname */
     ctx.font = `700 ${fs}px ${getComputedStyle(document.body).getPropertyValue("--mono")}`;
+    ctx.strokeStyle = glyph; ctx.lineWidth = Math.max(.5, fs * .07); ctx.lineJoin = "round";
+    const put = (g, x, y) => { ctx.fillText(g, x, y); if (bold) ctx.strokeText(g, x, y); };
     let settled = 0;
     const R = Math.max(70, cw * 14);
     const acx = ox + COLS * cw / 2, acy = oy + ROWS * ch / 2;
@@ -680,11 +682,11 @@ $("#copy").textContent = `© ${new Date().getFullYear()} ${CONFIG.name}`;
         const disturbed = Math.abs(p.ox) + Math.abs(p.oy) > 1.5;
         if (disturbed && Math.random() < .3) p.g = pick(FIELD_GLYPHS);
         ctx.globalAlpha = p.heavy ? 1 : .82;
-        ctx.fillText(disturbed ? p.g : p.fin, x, y);
+        put(disturbed ? p.g : p.fin, x, y);
       } else {
         if (Math.random() < .35) p.g = pick(FIELD_GLYPHS);
         ctx.globalAlpha = .25 + .6 * e;
-        ctx.fillText(p.g, x, y);
+        put(p.g, x, y);
       }
     }
     ctx.globalAlpha = 1;
